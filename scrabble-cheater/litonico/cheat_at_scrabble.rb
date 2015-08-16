@@ -6,13 +6,9 @@ class Trie < Hash
   def insert s
     s.each_char.reduce self do |trie_so_far, char|
       trie_so_far[char] ||= Trie.new
-      # TODO(Lito): This works, but I don't understand the return value here.
-      # Need to ask Aja about this.
     end
   end
 
-  # TODO(Lito): Also need to ask Aja about whether a trie *should* have a
-  # way to check prefixes- e.g. 'dog' accepted if 'dogs' is in the trie
   def check s
     begin
 
@@ -65,7 +61,9 @@ def cheat_at_scrabble dictionary, tiles
   words.sort_by { |word| word.length }.reverse
 end
 
-words = File.readlines("/usr/share/dict/words").map(&:chomp).map(&:downcase)
-puts "What tiles do you have?"
-tiles = gets.chomp
-puts cheat_at_scrabble words, tiles
+if __FILE__ == $0
+  words = File.readlines("/usr/share/dict/words").map(&:chomp).map(&:downcase)
+  puts "What tiles do you have?"
+  tiles = gets.chomp
+  puts cheat_at_scrabble words, tiles
+end
