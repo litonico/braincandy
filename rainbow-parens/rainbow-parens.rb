@@ -36,69 +36,34 @@ end
 
 def rainbowize text
   quot = false
-  parens = 0
-  brackets = 0
-  curlies = 0
+  matches = {
+    ")" => "(",
+    "]" => "[",
+    "}" => "{"
+  }
+  braces = {
+    "(" => 0,
+    "[" => 0,
+    "{" => 0
+  }
   output = []
-
-  def lbrace count, token, output
-    output << (color token, count)
-    unless quot
-      count += 1
-    end
-  end
-
-  def rbrace count, token, output, quoted
-    if count <= 0 && !quoted
-      abort "Unbalanced parens"
-    else
-      count -= 1
-    end
-    output << (color token, count)
-  end
 
   text.split(/([()\[\]{}"])/).each do |token|
     case token
 
-
-    when "("
-      output << (color token, parens)
+    when "(", "[", "{"
+      output << (color token, braces[token])
       unless quot
-        parens += 1
+        braces[token] += 1
       end
-    when ")"
-      if parens <= 0 && !quot
+
+    when ")", "]", "}"
+      if braces[matches[token]] <= 0 && !quot
         abort "Unbalanced parens"
       else
-        parens -= 1
+        braces[matches[token]] -= 1
       end
-      output << (color token, parens)
-
-    when "["
-      output << (color token, brackets)
-      unless quot
-        brackets += 1
-      end
-    when "]"
-      if brackets <= 0 && !quot
-        abort "Unbalanced parens"
-      else
-        brackets -= 1
-      end
-      output << (color token, brackets)
-
-    when "{"
-      output << (color token, curlies)
-      unless quot
-        curlies += 1
-      end
-    when "}"
-      if curlies <= 0 && !quot
-        abort "Unbalanced parens"
-      else
-        curlies -= 1
-      end
-      output << (color token, curlies)
+      output << (color token, braces[matches[token]])
 
     when '"'
       quot = !quot
@@ -109,7 +74,7 @@ def rainbowize text
     end
   end
 
-  if parens + brackets + curlies > 0
+  if braces.values.reduce(:+) > 0
     abort "Unbalanced parens"
   end
   if quot
@@ -118,7 +83,6 @@ def rainbowize text
 
   output.join
 end
-
 
 if __FILE__ == $0
   puts "Write some code"
