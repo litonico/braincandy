@@ -23,6 +23,9 @@ as well.
 5. [Bouncy Balls](https://github.com/SeaRbSg/braincandy/blob/master/bouncy-balls/README.md)
 6. [Pascal Triangle](https://github.com/SeaRbSg/braincandy/blob/master/pascal-triangle/README.md)
 7. [Yahtzee! Score](https://github.com/SeaRbSg/braincandy/blob/master/yahtzee-score/README.md)
+<<<<<<< HEAD
 8. [Infinite Battleship](https://github.com/SeaRbSg/braincandy/blob/master/infinite-battleship/README.md)
+=======
+>>>>>>> e81f56fdd5d15598a0b3fab4268a2effc15f547d
 
 
